@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARTWORK — 예술인 채용 플랫폼</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A090F;
+  --bg2: #110F1A;
+  --bg3: #1A1726;
+  --surface: #1E1B2E;
+  --surface2: #252236;
+  --purple: #7C4DFF;
+  --purple2: #9C6FFF;
+  --purple3: #B59BFF;
+  --purple-dim: rgba(124,77,255,0.12);
+  --purple-dim2: rgba(124,77,255,0.06);
+  --pink: #FF4D8D;
+  --cyan: #00E5FF;
+  --border: rgba(124,77,255,0.18);
+  --border2: rgba(255,255,255,0.06);
+  --t1: #F0EEF8;
+  --t2: #A09CC0;
+  --t3: #5C5880;
+  --r: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--t1);
+  overflow-x: hidden;
+  font-size: 14px;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 2px; }
+
+/* ── GNB ── */
+.gnb {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 60px;
+  background: rgba(10,9,15,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+}
+.gnb-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--purple);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Anton', sans-serif;
+  font-size: 18px; color: #fff; letter-spacing: 1px;
+}
+.logo-text {
+  font-family: 'Anton', sans-serif;
+  font-size: 22px; letter-spacing: 3px;
+  color: var(--t1);
+}
+.gnb-nav { display: flex; align-items: center; gap: 32px; }
+.gnb-nav a {
+  font-size: 13px; font-weight: 500; color: var(--t2);
+  text-decoration: none; letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+.gnb-nav a:hover { color: var(--t1); }
+.gnb-nav a.active { color: var(--purple3); }
+.gnb-right { display: flex; align-items: center; gap: 10px; }
+.gnb-login {
+  padding: 7px 18px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--t2); background: transparent;
+  font-size: 12px; font-family: inherit; cursor: pointer;
+  transition: all 0.2s;
+}
+.gnb-login:hover { border-color: var(--purple); color: var(--t1); }
+.gnb-cta {
+  padding: 7px 18px;
+  background: var(--purple);
+  border-radius: 20px;
+  color: #fff; border: none;
+  font-size: 12px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: all 0.2s;
+}
+.gnb-cta:hover { background: var(--purple2); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  padding: 100px 48px 80px;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124,77,255,0.18) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 30% at 20% 80%, rgba(255,77,141,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse 30% 20% at 80% 20%, rgba(0,229,255,0.06) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(124,77,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,77,255,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; letter-spacing: 2px; color: var(--purple3);
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  margin-bottom: 24px;
+  position: relative;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; width: 28px; height: 1px; background: var(--purple);
+}
+.hero-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(64px, 10vw, 120px);
+  letter-spacing: 6px;
+  line-height: 0.95;
+  margin-bottom: 12px;
+  position: relative;
+}
+.hero-title span {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple3) 50%, var(--pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(20px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--t2);
+  margin-bottom: 24px;
+}
+.hero-desc {
+  font-size: 15px; color: var(--t2);
+  line-height: 1.8; max-width: 520px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+.hero-btns { display: flex; gap: 12px; justify-content: center; position: relative; }
+.btn-primary {
+  padding: 14px 32px;
+  background: var(--purple);
+  color: #fff; border: none; border-radius: var(--r);
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+.btn-primary:hover { background: var(--purple2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124,77,255,0.35); }
+.btn-outline {
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--t1); border: 1px solid var(--border);
+  border-radius: var(--r);
+  font-size: 14px; font-weight: 500; font-family: inherit;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-outline:hover { border-color: var(--purple); color: var(--purple3); }
+
+.hero-stats {
+  display: flex; gap: 48px;
+  margin-top: 60px; position: relative;
+  padding-top: 40px;
+  border-top: 1px solid var(--border2);
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 40px; letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--purple3), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-label { font-size: 11px; color: var(--t3); letter-spacing: 1px; margin-top: 2px; }
+
+/* ── SECTION COMMON ── */
+section { padding: 100px 48px; }
+.section-eyebrow {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin-bottom: 16px;
+  font-size: 16px; letter-spacing: 1px; color: var(--purple3);
+  font-family: 'Caveat', cursive; font-weight: 700;
+}
+.section-eyebrow-line { width: 32px; height: 1px; background: var(--purple); }
+.section-title {
+  text-align: center;
+  font-family: 'DM Sans', 'Noto Sans KR', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700; line-height: 1.2;
+  margin-bottom: 12px; letter-spacing: -0.5px;
+}
+.section-desc {
+  text-align: center;
+  font-size: 14px; color: var(--t2); line-height: 1.8;
+  max-width: 500px; margin: 0 auto 56px;
+}
+
+/* ── BACKGROUND SECTION ── */
+#background { background: var(--bg2); position: relative; overflow: hidden; }
+.bg-accent {
+  position: absolute; top: -100px; right: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,77,255,0.12) 0%, transparent 70%);
+}
+
+.bg-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  max-width: 1000px; margin: 0 auto;
+}
+.bg-card {
+  border-radius: 16px; overflow: hidden;
+  position: relative; cursor: pointer;
+  transition: transform 0.3s;
+}
+.bg-card:hover { transform: translateY(-4px); }
+.bg-card-img {
+  height: 240px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 64px;
+  position: relative;
+}
+.bg-card:nth-child(1) .bg-card-img { background: linear-gradient(135deg, #1A0A2E 0%, #2D1054 100%); }
+.bg-card:nth-child(2) .bg-card-img { background: linear-gradient(135deg, #0D1A2E 0%, #0D3D6B 100%); }
+.bg-card:nth-child(3) .bg-card-img { background: linear-gradient(135deg, #1A0D1A 0%, #4A1A4A 100%); }
+.bg-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+}
+.bg-card-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 20px;
+}
+.bg-card-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(124,77,255,0.3);
+  border: 1px solid rgba(124,77,255,0.5);
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 12px; font-family: 'Caveat', cursive; font-weight: 700;
+  color: var(--purple3);
+  margin-bottom: 8px;
+}
+.bg-card-title { font-size: 16px; font-weight: 700; font-family: 'DM Sans','Noto Sans KR',sans-serif; line-height: 1.3; margin-bottom: 4px; }
+.bg-card-sub { font-size: 11px; color: var(--t2); }
+.bg-card-footer {
+  background: var(--surface);
+  padding: 12px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border);
+}
+.bg-card-footer-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag-sm {
+  padding: 2px 8px; border-radius: 20px;
+  background: var(--purple-dim);
+  border: 1px solid var(--border);
+  font-size: 10px; color: var(--purple3);
+}
+
+/* ── RESEARCH ── */
+#research { background: var(--bg); }
+.research-big {
+  text-align: center; margin-bottom: 48px;
+}
+.research-num {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(60px, 10vw, 100px);
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--t1) 0%, var(--purple3) 60%, var(--pink) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.research-label { font-size: 15px; color: var(--t2); }
+.research-sub { font-size: 12px; color: var(--t3); margin-top: 4px; }
+
+.user-cards {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  max-width: 1000px; margin: 0 auto;
+}
+.user-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px;
+  transition: all 0.2s; cursor: pointer;
+}
+.user-card:hover { border-color: var(--purple); background: var(--surface2); transform: translateY(-3px); }
+.user-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 12px;
+  border: 2px solid var(--border);
+}
+.user-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.user-role { font-size: 11px; color: var(--purple3); margin-bottom: 8px; }
+.user-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.user-tag {
+  padding: 2px 7px; border-radius: 20px;
+  background: var(--purple-dim2); border: 1px solid var(--border);
+  font-size: 10px; color: var(--t2);
+}
+
+/* ── JOB LIST (메인 기능) ── */
+#jobs { background: var(--bg2); }
+
+.job-filter-bar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 24px; flex-wrap: wrap;
+  max-width: 1000px; margin-left: auto; margin-right: auto;
+}
+.search-wrap {
+  flex: 1; min-width: 240px;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 10px 14px;
+  transition: border-color 0.2s;
+}
+.search-wrap:focus-within { border-color: var(--purple); }
+.search-wrap svg { width: 14px; height: 14px; fill: var(--t3); flex-shrink: 0; }
+.search-wrap input {
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--t1); font-size: 13px; font-family: inherit;
+}
+.search-wrap input::placeholder { color: var(--t3); }
+.filter-btns { display: flex; gap: 6px; }
+.filter-btn {
+  padding: 8px 14px; border-radius: var(--r);
+  border: 1px solid var(--border);
+  background: transparent; color: var(--t2);
+  font-size: 12px; font-family: inherit; cursor: pointer;
+  transition: all 0.18s; white-space: nowrap;
+}
+.filter-btn.active { background: var(--purple); color: #fff; border-color: var(--purple); }
+.filter-btn:hover:not(.active) { border-color: var(--purple); color: var(--purple3); }
+
+.job-list {
+  max-width: 1000px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.job-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 16px; align-items: center;
+  cursor: pointer; transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.job-card::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--purple);
+  transform: scaleY(0); transition: transform 0.2s;
+  transform-origin: bottom; border-radius: 0 2px 2px 0;
+}
+.job-card:hover { border-color: var(--purple); background: var(--surface2); }
+.job-card:hover::before { transform: scaleY(1); }
+.job-card.featured { border-color: rgba(124,77,255,0.4); background: rgba(124,77,255,0.05); }
+
+.job-company-logo {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; background: var(--surface2);
+  border: 1px solid var(--border2); flex-shrink: 0;
+}
+.job-info { min-width: 0; }
+.job-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+.job-title { font-size: 15px; font-weight: 600; color: var(--t1); }
+.job-badge {
+  padding: 2px 8px; border-radius: 20px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+}
+.badge-new { background: rgba(0,229,255,0.12); border: 1px solid rgba(0,229,255,0.3); color: var(--cyan); }
+.badge-hot { background: rgba(255,77,141,0.12); border: 1px solid rgba(255,77,141,0.3); color: var(--pink); }
+.badge-feat { background: rgba(124,77,255,0.15); border: 1px solid var(--border); color: var(--purple3); }
+.job-company { font-size: 12px; color: var(--t2); margin-bottom: 8px; }
+.job-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.job-tag {
+  padding: 3px 9px; border-radius: 20px;
+  background: var(--purple-dim2); border: 1px solid var(--border2);
+  font-size: 11px; color: var(--t2);
+}
+.job-right { text-align: right; flex-shrink: 0; }
+.job-pay { font-size: 14px; font-weight: 600; color: var(--t1); margin-bottom: 4px; }
+.job-pay-sub { font-size: 11px; color: var(--t3); margin-bottom: 8px; }
+.job-d-day {
+  display: inline-block;
+  padding: 3px 10px; border-radius: 20px;
+  border: 1px solid var(--border);
+  font-size: 11px; color: var(--t2);
+}
+.job-d-day.urgent { border-color: var(--pink); color: var(--pink); }
+
+.load-more {
+  display: flex; justify-content: center; margin-top: 32px;
+}
+
+/* ── CTA SECTION ── */
+#cta {
+  background: var(--bg);
+  padding: 100px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#cta::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(124,77,255,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(40px, 6vw, 72px);
+  letter-spacing: 4px;
+  line-height: 1.1; margin-bottom: 16px;
+  position: relative;
+}
+.cta-title span { color: var(--purple3); }
+.cta-desc { font-size: 15px; color: var(--t2); max-width: 480px; margin: 0 auto 36px; line-height: 1.8; position: relative; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; position: relative; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border2);
+  padding: 40px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-logo { display: flex; align-items: center; gap: 8px; }
+.footer-logo-text {
+  font-family: 'Anton', sans-serif;
+  font-size: 18px; letter-spacing: 3px; color: var(--t3);
+}
+.footer-copy { font-size: 11px; color: var(--t3); letter-spacing: 0.5px; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 11px; color: var(--t3); text-decoration: none; }
+.footer-links a:hover { color: var(--t2); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes glow { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+.hero-eyebrow { animation: fadeIn 0.6s ease forwards; }
+.hero-title { animation: fadeUp 0.7s 0.1s ease both; }
+.hero-subtitle { animation: fadeUp 0.7s 0.2s ease both; }
+.hero-desc { animation: fadeUp 0.7s 0.3s ease both; }
+.hero-btns { animation: fadeUp 0.7s 0.4s ease both; }
+.hero-stats { animation: fadeUp 0.7s 0.5s ease both; }
+
+/* ── FLOATING ORB ── */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite, glow 4s ease-in-out infinite;
+}
+.orb-1 { width: 300px; height: 300px; background: rgba(124,77,255,0.15); top: 10%; right: 5%; animation-delay: 0s; }
+.orb-2 { width: 200px; height: 200px; background: rgba(255,77,141,0.08); bottom: 20%; left: 8%; animation-delay: 2s; }
+.orb-3 { width: 150px; height: 150px; background: rgba(0,229,255,0.06); top: 60%; right: 20%; animation-delay: 4s; }
+
+/* ── PAGE TABS ── */
+.page-tabs {
+  display: none;
+  position: fixed; top: 60px; left: 0; right: 0; z-index: 150;
+  background: rgba(10,9,15,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border2);
+  padding: 0 48px;
+}
+.page-tabs.show { display: flex; }
+.page-tab {
+  padding: 14px 20px;
+  font-size: 13px; font-weight: 500; color: var(--t3);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.18s; white-space: nowrap;
+  background: none; border-top: none; border-left: none; border-right: none;
+  font-family: inherit;
+}
+.page-tab.active { color: var(--t1); border-bottom-color: var(--purple); }
+.page-tab:hover:not(.active) { color: var(--t2); }
+
+/* ── DETAIL MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  z-index: 500; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 100%; max-width: 560px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 32px;
+  position: relative;
+  animation: fadeUp 0.3s ease;
+}
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 32px; height: 32px;
+  border-radius: 50%; background: var(--surface2);
+  border: 1px solid var(--border2);
+  color: var(--t2); font-size: 16px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.18s;
+}
+.modal-close:hover { background: var(--surface); color: var(--t1); }
+.modal-tag { display: inline-flex; gap: 4px; flex-wrap: wrap; margin-bottom: 16px; }
+.modal-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.modal-company { font-size: 13px; color: var(--t2); margin-bottom: 20px; }
+.modal-divider { height: 1px; background: var(--border2); margin: 20px 0; }
+.modal-section-title { font-size: 14px; font-family: 'Caveat', cursive; font-weight: 700; letter-spacing: 1px; color: var(--purple3); margin-bottom: 12px; }
+.modal-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.modal-info-item { background: var(--surface); border-radius: 10px; padding: 12px 14px; }
+.modal-info-label { font-size: 10px; color: var(--t3); margin-bottom: 4px; letter-spacing: 1px; }
+.modal-info-val { font-size: 13px; font-weight: 500; }
+.modal-desc { font-size: 13px; color: var(--t2); line-height: 1.8; margin-bottom: 24px; }
+.modal-apply {
+  width: 100%; padding: 14px;
+  background: var(--purple); color: #fff;
+  border: none; border-radius: var(--r);
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: all 0.2s;
+}
+.modal-apply:hover { background: var(--purple2); }
+</style>
+</head>
+<body>
+
+<!-- GNB -->
+<nav class="gnb">
+  <a class="gnb-logo" href="#">
+    <div class="logo-mark">A</div>
+    <span class="logo-text">ARTWORK</span>
+  </a>
+  <div class="gnb-nav">
+    <a href="#jobs" class="active">채용공고</a>
+    <a href="#">프로젝트</a>
+    <a href="#">아티스트</a>
+    <a href="#">커뮤니티</a>
+  </div>
+  <div class="gnb-right">
+    <button class="gnb-login">로그인</button>
+    <button class="gnb-cta">무료 시작</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-eyebrow">
+    <span class="hero-eyebrow-line"></span>
+    Overview
+    <span class="hero-eyebrow-line"></span>
+  </div>
+  <h1 class="hero-title">
+    ART<span>WORK</span>
+  </h1>
+  <div class="hero-subtitle">예술인을 위한 채용 · 공연 · 협업 플랫폼</div>
+  <p class="hero-desc">
+    댄서, 퍼포머, 아티스트를 위한 전용 플랫폼.<br>
+    당신의 무대를 찾아드립니다.
+  </p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('jobs').scrollIntoView({behavior:'smooth'})">공고 둘러보기 →</button>
+    <button class="btn-outline">아티스트 등록</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">2,840</div>
+      <div class="stat-label">등록 아티스트</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1,240</div>
+      <div class="stat-label">활성 공고</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">380</div>
+      <div class="stat-label">파트너 기업</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">92%</div>
+      <div class="stat-label">매칭 성공률</div>
+    </div>
+  </div>
+</section>
+
+<!-- BACKGROUND -->
+<section id="background">
+  <div class="bg-accent"></div>
+  <div class="section-eyebrow">
+    <span class="section-eyebrow-line"></span>
+    Background
+    <span class="section-eyebrow-line"></span>
+  </div>
+  <h2 class="section-title">하나의 콘텐츠가 된 세계관</h2>
+  <p class="section-desc">예술인과 기회를 연결하는 세 가지 핵심 영역</p>
+  <div class="bg-cards">
+    <div class="bg-card">
+      <div class="bg-card-img">
+        💃
+        <div class="bg-card-overlay"></div>
+        <div class="bg-card-content">
+          <div class="bg-card-tag">구인·구직</div>
+          <div class="bg-card-title">독자성과 차별화를<br>간호하기 위한<br>아이덴티티</div>
+          <div class="bg-card-sub">나를 표현하는 무대를 찾다</div>
+        </div>
+      </div>
+      <div class="bg-card-footer">
+        <div class="bg-card-footer-tags">
+          <span class="tag-sm">댄서</span>
+          <span class="tag-sm">퍼포머</span>
+          <span class="tag-sm">프리랜서</span>
+        </div>
+      </div>
+    </div>
+    <div class="bg-card">
+      <div class="bg-card-img">
+        🎭
+        <div class="bg-card-overlay"></div>
+        <div class="bg-card-content">
+          <div class="bg-card-tag">공연·행사</div>
+          <div class="bg-card-title">퍼포먼스에서<br>표현되고 설정된<br>다양한 규칙</div>
+          <div class="bg-card-sub">함께 만드는 무대</div>
+        </div>
+      </div>
+      <div class="bg-card-footer">
+        <div class="bg-card-footer-tags">
+          <span class="tag-sm">공연팀</span>
+          <span class="tag-sm">행사기획</span>
+          <span class="tag-sm">학원</span>
+        </div>
+      </div>
+    </div>
+    <div class="bg-card">
+      <div class="bg-card-img">
+        🎬
+        <div class="bg-card-overlay"></div>
+        <div class="bg-card-content">
+          <div class="bg-card-tag">협업</div>
+          <div class="bg-card-title">스토리텔링으로<br>고유한 캐릭터와<br>이야기를 구성</div>
+          <div class="bg-card-sub">브랜드와 아티스트의 연결</div>
+        </div>
+      </div>
+      <div class="bg-card-footer">
+        <div class="bg-card-footer-tags">
+          <span class="tag-sm">브랜드</span>
+          <span class="tag-sm">에이전시</span>
+          <span class="tag-sm">콘텐츠</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USER RESEARCH -->
+<section id="research">
+  <div class="section-eyebrow">
+    <span class="section-eyebrow-line"></span>
+    User Research
+    <span class="section-eyebrow-line"></span>
+  </div>
+  <div class="research-big">
+    <div class="research-num">73.2%</div>
+    <div class="research-label">Z세대에게 세계관은 중요하다!</div>
+    <div class="research-sub">전문 예술인 플랫폼 필요성 공감 (N=480, 2024)</div>
+  </div>
+  <div class="user-cards">
+    <div class="user-card">
+      <div class="user-avatar">💃</div>
+      <div class="user-name">김아린</div>
+      <div class="user-role">스트릿 댄서</div>
+      <div class="user-tags">
+        <span class="user-tag">힙합</span>
+        <span class="user-tag">팝핀</span>
+        <span class="user-tag">7년차</span>
+      </div>
+    </div>
+    <div class="user-card">
+      <div class="user-avatar">🎤</div>
+      <div class="user-name">박지훈</div>
+      <div class="user-role">퍼포머</div>
+      <div class="user-tags">
+        <span class="user-tag">보컬</span>
+        <span class="user-tag">댄스</span>
+        <span class="user-tag">5년차</span>
+      </div>
+    </div>
+    <div class="user-card">
+      <div class="user-avatar">🎨</div>
+      <div class="user-name">이소연</div>
+      <div class="user-role">크리에이터</div>
+      <div class="user-tags">
+        <span class="user-tag">영상</span>
+        <span class="user-tag">촬영</span>
+        <span class="user-tag">편집</span>
+      </div>
+    </div>
+    <div class="user-card">
+      <div class="user-avatar">🏢</div>
+      <div class="user-name">Dance Lab</div>
+      <div class="user-role">댄스학원 · 구인자</div>
+      <div class="user-tags">
+        <span class="user-tag">강사모집</span>
+        <span class="user-tag">K-POP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOB LIST -->
+<section id="jobs">
+  <div class="section-eyebrow">
+    <span class="section-eyebrow-line"></span>
+    채용공고
+    <span class="section-eyebrow-line"></span>
+  </div>
+  <h2 class="section-title">지금 열린 기회들</h2>
+  <p class="section-desc">1,240개의 공고 중 당신에게 맞는 무대를 찾아보세요</p>
+
+  <div class="job-filter-bar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="#5C5880" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <input type="text" placeholder="직종, 기업명, 키워드 검색...">
+    </div>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="setFilter(this,'전체')">전체</button>
+      <button class="filter-btn" onclick="setFilter(this,'레슨')">레슨</button>
+      <button class="filter-btn" onclick="setFilter(this,'공연')">공연</button>
+      <button class="filter-btn" onclick="setFilter(this,'행사')">행사</button>
+      <button class="filter-btn" onclick="setFilter(this,'프로젝트')">프로젝트</button>
+      <button class="filter-btn" onclick="setFilter(this,'협업')">협업</button>
+    </div>
+  </div>
+
+  <div class="job-list" id="jobList"></div>
+
+  <div class="load-more">
+    <button class="btn-outline">더 보기</button>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-title">
+    당신의 무대,<br><span>지금 시작하세요.</span>
+  </div>
+  <p class="cta-desc">ARTWORK와 함께라면 예술인도, 기획자도<br>더 쉽게 연결됩니다.</p>
+  <div class="cta-btns">
+    <button class="btn-primary">아티스트로 시작하기 →</button>
+    <button class="btn-outline">기업회원 가입</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="logo-mark" style="width:26px;height:26px;font-size:14px;">A</div>
+    <span class="footer-logo-text">ARTWORK</span>
+  </div>
+  <div class="footer-copy">© 2026 ARTWORK. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#">이용약관</a>
+    <a href="#">개인정보처리방침</a>
+    <a href="#">공지사항</a>
+  </div>
+</footer>
+
+<!-- JOB DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+/* ── JOB DATA ── */
+const JOBS = [
+  {id:1,emoji:'🕺',company:'Dance Lab Seoul',title:'K-POP 댄스 강사 모집',tags:['레슨','K-POP','상시채용'],badge:'hot',pay:'월 250~350만원',payType:'협의 가능',dday:'D-8',urgent:true,loc:'서울 강남구',career:'3년 이상',type:'정규직',desc:'K-POP 댄스 전문 강사를 모집합니다. 스트릿댄스 또는 K-POP 장르 경력자 우대. 수업 기획 능력 있는 분 환영합니다.'},
+  {id:2,emoji:'🎭',company:'빅라이브 엔터테인먼트',title:'뮤지컬 공연팀 댄서 (앙상블)',tags:['공연','뮤지컬','단기'],badge:'new',pay:'공연 회당 15만원',payType:'출연료',dday:'D-14',urgent:false,loc:'서울 마포구',career:'신입 가능',type:'프리랜서',desc:'2026 여름 뮤지컬 앙상블 댄서를 모집합니다. 연습 기간 3주, 공연 기간 2주. 재즈댄스 또는 발레 기본기 필수.'},
+  {id:3,emoji:'🎪',company:'하이퍼 이벤트',title:'기업 행사 퍼포머 모집',tags:['행사','퍼포먼스','즉시가능'],badge:'feat',pay:'일당 20만원~',payType:'건별',dday:'D-3',urgent:true,loc:'서울 전역',career:'경력무관',type:'아르바이트',desc:'기업 행사 및 쇼케이스 퍼포머를 상시 모집합니다. 힙합, 팝핀, 비보이 등 다양한 장르 환영. 즉시 투입 가능한 분 우대.'},
+  {id:4,emoji:'🎬',company:'크리에이티브 스튜디오',title:'MV 댄서 / 퍼포머 캐스팅',tags:['프로젝트','뮤직비디오','촬영'],badge:'new',pay:'촬영 1일 25만원',payType:'고정',dday:'D-5',urgent:false,loc:'서울 성수동',career:'포트폴리오 필수',type:'프리랜서',desc:'국내 인디밴드 뮤직비디오 촬영 참여 댄서를 모집합니다. 개성 있는 댄서 환영. 포트폴리오 영상 링크 제출 필수.'},
+  {id:5,emoji:'🏫',company:'아트 댄스 아카데미',title:'방과후 댄스 강사 (초/중등)',tags:['레슨','방과후','정규'],badge:'',pay:'시간당 4~5만원',payType:'협의',dday:'D-21',urgent:false,loc:'경기 분당',career:'1년 이상',type:'파트타임',desc:'초등학교, 중학교 방과후 댄스 수업 강사를 모집합니다. K-POP 위주 수업. 아이들과의 소통 능력 있는 분 환영.'},
+  {id:6,emoji:'📸',company:'브랜드엑스 컴퍼니',title:'브랜드 캠페인 댄서 콜라보',tags:['협업','브랜드','광고'],badge:'feat',pay:'협의',payType:'프로젝트',dday:'D-10',urgent:false,loc:'서울 용산',career:'팔로워 5K 이상',type:'콜라보',desc:'패션 브랜드 SNS 캠페인 댄서 콜라보레이션 파트너를 찾고 있습니다. 인스타그램 활동 중인 댄서 우대. 의상 및 스튜디오 제공.'},
+];
+
+function setFilter(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderJobs(cat);
+}
+
+function renderJobs(cat='전체') {
+  const list = document.getElementById('jobList');
+  const filtered = cat === '전체' ? JOBS : JOBS.filter(j => j.tags.some(t => t.includes(cat)));
+  list.innerHTML = filtered.map(j => `
+    <div class="job-card${j.badge==='feat'?' featured':''}" onclick="openModal(${j.id})">
+      <div class="job-company-logo">${j.emoji}</div>
+      <div class="job-info">
+        <div class="job-top">
+          <span class="job-title">${j.title}</span>
+          ${j.badge ? `<span class="job-badge badge-${j.badge}">${j.badge.toUpperCase()}</span>` : ''}
+        </div>
+        <div class="job-company">${j.company} · ${j.loc}</div>
+        <div class="job-tags">
+          ${j.tags.map(t=>`<span class="job-tag">${t}</span>`).join('')}
+          <span class="job-tag">${j.career}</span>
+          <span class="job-tag">${j.type}</span>
+        </div>
+      </div>
+      <div class="job-right">
+        <div class="job-pay">${j.pay}</div>
+        <div class="job-pay-sub">${j.payType}</div>
+        <div class="job-d-day${j.urgent?' urgent':''}">${j.dday}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openModal(id) {
+  const j = JOBS.find(j => j.id === id);
+  if (!j) return;
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-tag">
+      ${j.tags.map(t=>`<span class="job-tag">${t}</span>`).join('')}
+      ${j.badge ? `<span class="job-badge badge-${j.badge}">${j.badge.toUpperCase()}</span>` : ''}
+    </div>
+    <div class="modal-title">${j.title}</div>
+    <div class="modal-company">${j.company} · ${j.loc}</div>
+    <div class="modal-divider"></div>
+    <div class="modal-section-title">공고 정보</div>
+    <div class="modal-info-grid">
+      <div class="modal-info-item"><div class="modal-info-label">급여</div><div class="modal-info-val">${j.pay}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">지급 방식</div><div class="modal-info-val">${j.payType}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">경력</div><div class="modal-info-val">${j.career}</div></div>
+      <div class="modal-info-item"><div class="modal-info-label">고용형태</div><div class="modal-info-val">${j.type}</div></div>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-section-title">공고 내용</div>
+    <p class="modal-desc">${j.desc}</p>
+    <button class="modal-apply">지원하기 →</button>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+}
+
+/* ── INIT ── */
+renderJobs();
+</script>
+</body>
+</html>
